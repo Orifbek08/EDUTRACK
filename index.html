@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:; img-src * data:; connect-src *;">
+<title>EduTrack</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,Arial,sans-serif;background:#f0f4f8;min-height:100vh;color:#1a202c}
+.hide{display:none!important}
+#lWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a8a,#6d28d9);padding:20px}
+.lbox{background:#fff;border-radius:20px;padding:32px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.llogo{font-size:48px;text-align:center;margin-bottom:10px}
+.ltitle{font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
+.lsub{font-size:13px;color:#9ca3af;text-align:center;margin-bottom:24px}
+.fl{display:block;font-size:12px;font-weight:600;color:#6b7280;margin-bottom:5px;text-transform:uppercase}
+.fi{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;color:#1a202c;background:#fff;margin-bottom:14px}
+.fi:focus{border-color:#3b82f6}
+.fs{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px;background:#fff;color:#1a202c;outline:none;-webkit-appearance:none;margin-bottom:14px}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;text-align:center}
+.btn:active{opacity:.82}
+.btn+.btn{margin-top:8px}
+.bp{background:linear-gradient(135deg,#3b82f6,#6d28d9);color:#fff}
+.bg{background:#22c55e;color:#fff}
+.bgr{background:#f3f4f6;color:#6b7280}
+.bsm{padding:8px 14px;font-size:13px;width:auto;display:inline-block;border-radius:8px}
+.hdr{background:linear-gradient(135deg,#1e3a8a,#6d28d9);padding:13px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.ht{flex:1;font-size:16px;font-weight:700;color:#fff}
+.hu{font-size:11px;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);padding:4px 10px;border-radius:16px}
+.hb{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:50;box-shadow:0 -1px 8px rgba(0,0,0,.08)}
+.bni{flex:1;padding:9px 4px 11px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent}
+.bni-i{font-size:20px;line-height:1}
+.bni-l{font-size:10px;color:#9ca3af;font-weight:500}
+.bni.on .bni-l{color:#3b82f6;font-weight:700}
+.page{display:none;padding-bottom:76px;min-height:calc(100vh - 50px)}
+.page.on{display:block}
+.card{background:#fff;border-radius:14px;padding:16px;margin:10px 14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ct{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.mok{background:#dcfce7;color:#15803d;padding:11px;border-radius:9px;font-size:13px;text-align:center;margin-top:10px}
+.mer{background:#fee2e2;color:#dc2626;padding:11px;border-radius:9px;font-size:13px;text-align:center;margin-top:10px}
+.minf{background:#dbeafe;color:#1d4ed8;padding:11px;border-radius:9px;font-size:13px;text-align:center;margin-top:10px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 14px}
+.sc{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.scn{font-size:20px;font-weight:800;margin-bottom:3px}
+.scl{font-size:11px;color:#9ca3af}
+.wide{grid-column:span 2}
+.cbl{color:#3b82f6}.cgr{color:#22c55e}.crd{color:#ef4444}.cam{color:#f59e0b}.cpr{color:#7c3aed}
+.drow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f9fafb;gap:6px;flex-wrap:wrap}
+.drow:last-child{border:none}
+.drn{font-size:13px;font-weight:700;min-width:52px}
+.dbg{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.bdg{padding:3px 7px;border-radius:16px;font-size:11px;font-weight:600}
+.bkk{background:#dcfce7;color:#15803d}
+.bmm{background:#fee2e2;color:#dc2626}
+.bol{background:#dbeafe;color:#1d4ed8}
+.bmt{background:#f3f4f6;color:#6b7280}
+.bto{background:#fef9c3;color:#92400e}
+.tugbtn{background:#ef4444;color:#fff;border:none;padding:4px 9px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer}
+.krow{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f9fafb}
+.krow:last-child{border:none}
+.krn{font-size:14px;font-weight:600}
+.kri{font-size:12px;color:#6b7280;margin-top:2px}
+.fbar{padding:8px 14px 4px;display:flex;gap:8px}
+.fbar .fi{flex:1;margin:0}
+.fbar .fs{flex:0 0 130px;margin:0}
+.si{background:#fff;border-radius:12px;padding:12px 14px;margin:0 14px 8px;display:flex;align-items:center;gap:11px;box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer}
+.si:active{opacity:.8}
+.sav{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6d28d9);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
+.sinf{flex:1;min-width:0}
+.sn{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss{font-size:11px;color:#9ca3af;margin-top:2px}
+.sq{font-size:14px;font-weight:700;flex-shrink:0}
+.qred{color:#ef4444}.qgrn{color:#22c55e}
+.phdr{background:linear-gradient(135deg,#1e3a8a,#6d28d9);padding:22px 16px;text-align:center;color:#fff}
+.pav{width:68px;height:68px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;margin:0 auto 10px}
+.pnm{font-size:19px;font-weight:700;margin-bottom:3px}
+.pidd{font-size:12px;opacity:.8}
+.pkr{font-size:12px;background:rgba(255,255,255,.18);display:inline-block;padding:3px 11px;border-radius:16px;margin-top:5px}
+.psts{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border-bottom:1px solid #e5e7eb}
+.pst{padding:10px 6px;text-align:center;border-right:1px solid #e5e7eb}
+.pst:last-child{border:none}
+.pstn{font-size:14px;font-weight:700}
+.pstl{font-size:10px;color:#9ca3af;margin-top:2px}
+.di{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f9fafb}
+.di:last-child{border:none}
+.dleft{flex:1}
+.dn{font-size:13px;font-weight:600}
+.dk{font-size:11px;color:#94a3b8;margin-top:2px}
+.drt{display:flex;align-items:center;gap:7px}
+.dtv{font-size:13px;font-weight:700;color:#22c55e}
+.swrap{padding:12px 14px;padding-bottom:80px}
+.sbox{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.slbl{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:8px}
+.srow{display:flex;gap:8px}
+.srow .fi{flex:1;margin:0}
+.afrm{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px}
+.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px;gap:10px}
+.spin{width:34px;height:34px;border:3px solid #e5e7eb;border-top-color:#3b82f6;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="lWrap">
+  <div class="lbox">
+    <div class="llogo">🎓</div>
+    <div class="ltitle">EduTrack</div>
+    <div class="lsub">Tizimga kirish</div>
+    <label class="fl">Foydalanuvchi</label>
+    <input type="text" id="lU" class="fi" placeholder="admin / otabek ..." autocomplete="username">
+    <label class="fl">Parol</label>
+    <input type="password" id="lP" class="fi" placeholder="Parol..." autocomplete="current-password" onkeyup="if(event.key==='Enter')login()">
+    <button class="btn bp" onclick="login()">Kirish</button>
+    <div id="lMsg"></div>
+  </div>
+</div>
+
+<div id="aWrap" class="hide">
+  <div class="hdr">
+    <div class="ht" id="hT">Dashboard</div>
+    <div class="hu" id="hU"></div>
+    <button class="hb" onclick="logout()">Chiqish</button>
+  </div>
+
+  <div id="p0" class="page on">
+    <div id="dLoad" class="ldg"><div class="spin"></div></div>
+    <div id="dBody" class="hide">
+      <div class="sg">
+        <div class="sc"><div class="scn cbl" id="dT">0</div><div class="scl">O'quvchilar</div></div>
+        <div class="sc"><div class="scn cam" id="dK">0$</div><div class="scl">Jami kelishuv</div></div>
+        <div class="sc"><div class="scn cpr" id="dZ">0$</div><div class="scl">Jami zaklad</div></div>
+        <div class="sc"><div class="scn cgr" id="dTv">0$</div><div class="scl">To'langan</div></div>
+        <div class="sc wide"><div class="scn crd" id="dQ">0$</div><div class="scl">Umumiy qolgan qarz</div></div>
+      </div>
+      <div class="card"><div class="ct">Darslar holati</div><div id="darsD"></div></div>
+      <div class="card" id="kurCard"><div class="ct">Kuratorlar</div><div id="kurD"></div></div>
+    </div>
+  </div>
+
+  <div id="p1" class="page">
+    <div class="swrap">
+      <div class="sbox">
+        <div class="slbl">📷 ID — skanerlang yoki kiriting</div>
+        <div class="srow">
+          <input type="text" id="sId" class="fi" placeholder="ID..." autocomplete="off" oninput="onSI(this)" onkeyup="if(event.key==='Enter')findSt()">
+          <button class="btn bp bsm" onclick="openCam()" style="margin:0;white-space:nowrap">📷 Kamera</button>
+        </div>
+        <div id="camWrap" class="hide" style="margin-top:10px;border-radius:10px;overflow:hidden;position:relative">
+          <video id="camVideo" style="width:100%;border-radius:10px" autoplay playsinline></video>
+          <canvas id="camCanvas" style="display:none"></canvas>
+          <button onclick="closeCam()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:20px;padding:4px 12px;font-size:13px;cursor:pointer">✕ Yopish</button>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);color:#fff;font-size:12px;padding:4px 12px;border-radius:20px">QR kodni kameraga tutib turing</div>
+        </div>
+        <div id="sMsg"></div>
+      </div>
+      <div id="stCard" class="hide">
+        <div style="background:#fff;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+          <div class="phdr">
+            <div class="pav" id="cAv"></div>
+            <div class="pnm" id="cNm"></div>
+            <div class="pidd" id="cI"></div>
+            <div class="pkr" id="cKr"></div>
+          </div>
+          <div class="psts">
+            <div class="pst"><div class="pstn" id="cK"></div><div class="pstl">Kelishuv</div></div>
+            <div class="pst"><div class="pstn" id="cZ"></div><div class="pstl">Zaklad</div></div>
+            <div class="pst"><div class="pstn" id="cTv"></div><div class="pstl">To'langan</div></div>
+            <div class="pst"><div class="pstn" id="cQ"></div><div class="pstl">Qolgan</div></div>
+          </div>
+          <div style="padding:4px 14px 12px" id="cD"></div>
+        </div>
+        <div class="afrm">
+          <div class="ct">✅ Davomat kiritish</div>
+          <label class="fl">Dars</label>
+          <select id="aDars" class="fs"><option value="1">1-dars</option><option value="2">2-dars</option><option value="3">3-dars</option><option value="4">4-dars</option><option value="5">5-dars</option><option value="6">6-dars</option><option value="7">7-dars</option><option value="8">8-dars</option></select>
+          <label class="fl">Holat</label>
+          <select id="aHolat" class="fs" onchange="tvT()"><option value="Келди">✅ Келди</option><option value="Келмади">❌ Келмади</option><option value="Онлайн">🌐 Онлайн</option></select>
+          <div id="tvDiv"><label class="fl">To'lov ($)</label><input type="number" id="aTolov" class="fi" placeholder="0" min="0"></div>
+          <button class="btn bg" onclick="saveAtt()">💾 Saqlash</button>
+          <div id="aMsg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p2" class="page">
+    <div class="fbar" style="padding-top:12px">
+      <input type="text" id="lQ" class="fi" placeholder="🔍 Qidirish..." oninput="filtL()">
+      <select id="lKur" class="fs" onchange="filtL()">
+        <option value="">Barcha</option>
+        <option value="Отабек">Отабек</option>
+        <option value="Алимардон">Алимардон</option>
+        <option value="Дилшодбек">Дилшодбек</option>
+        <option value="Раъно">Раъно</option>
+        <option value="Бунёдбек">Бунёдбек</option>
+        <option value="Tanlanmagan">Tanlanmagan</option>
+      </select>
+    </div>
+    <div id="listD" style="padding-top:6px"><div class="ldg"><div class="spin"></div></div></div>
+  </div>
+
+  <div id="p3" class="page"><div id="profD"></div></div>
+
+  <div id="p4" class="page">
+    <div style="padding:14px">
+      <div style="background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+        <div class="ct">➕ Yangi o'quvchi qo'shish</div>
+        <label class="fl">ID</label><input type="text" id="nId" class="fi" placeholder="101">
+        <label class="fl">Ism Familiya</label><input type="text" id="nFio" class="fi" placeholder="To'liq ism...">
+        <label class="fl">Kelishuv ($)</label><input type="number" id="nK" class="fi" placeholder="800">
+        <label class="fl">Zaklad ($)</label><input type="number" id="nZ" class="fi" placeholder="100">
+        <label class="fl">Kurator</label>
+        <select id="nKur" class="fs"><option value="">— Tanlang —</option><option value="Отабек">Отабек</option><option value="Алимардон">Алимардон</option><option value="Дилшодбек">Дилшодбек</option><option value="Раъно">Раъно</option><option value="Бунёдбек">Бунёдбек</option></select>
+        <button class="btn bg" onclick="addSt()">➕ Qo'shish</button>
+        <div id="addMsg"></div>
+      </div>
+      <div style="margin-top:14px;background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="ct" style="margin:0">🔲 QR Kodlar</div>
+          <button class="btn bgr bsm" onclick="window.print()">🖨️ Chop etish</button>
+        </div>
+        <input type="text" class="fi" style="margin-bottom:10px" placeholder="🔍 Ism bo'yicha..." oninput="filtQR(this.value)">
+        <div id="qrD" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bnav">
+    <button class="bni on" id="n0" onclick="go(0)"><span class="bni-i">📊</span><span class="bni-l">Dashboard</span></button>
+    <button class="bni" id="n1" onclick="go(1)"><span class="bni-i">📷</span><span class="bni-l">Skaner</span></button>
+    <button class="bni" id="n2" onclick="go(2)"><span class="bni-i">👥</span><span class="bni-l">Ro'yxat</span></button>
+    <button class="bni" id="n3" onclick="go(4)"><span class="bni-i">➕</span><span class="bni-l">Qo'shish</span></button>
+  </div>
+</div>
+
+<script>
+var API="/.netlify/functions/api";
+var SITE="https://rba-edutrack.netlify.app/";
+var G={tk:"",role:"",name:"",sts:[],qAll:[],cur:null,stm:null};
+var PGS=["p0","p1","p2","p3","p4"];
+var TTL=["📊 Dashboard","📷 Davomat","👥 Ro'yxat","👤 Profil","➕ Qo'shish"];
+var NAVMAP={0:0,1:1,2:2,3:2,4:3};
+
+window.onload=function(){
+  var t=localStorage.getItem("kT")||"";
+  if(t){G.tk=t;G.role=localStorage.getItem("kR")||"";G.name=localStorage.getItem("kN")||"";showApp();go(0);
+    var u=new URLSearchParams(location.search).get("id");
+    if(u){go(1);g("sId").value=u;findSt();}
+  }
+};
+
+function login(){
+  var u=g("lU").value.trim(),p=g("lP").value.trim();
+  if(!u||!p)return;msg("lMsg","inf","...");
+  api({action:"login",username:u,password:p},function(r){
+    if(r&&r.ok){G.tk=r.token;G.role=r.role;G.name=r.name;
+      localStorage.setItem("kT",r.token);localStorage.setItem("kR",r.role);localStorage.setItem("kN",r.name);
+      msg("lMsg","","");showApp();go(0);
+      var u=new URLSearchParams(location.search).get("id");
+      if(u){go(1);g("sId").value=u;findSt();}
+    }else msg("lMsg","er","❌ "+(r?r.msg:"Xato"));
+  });
+}
+
+function logout(){if(!confirm("Chiqish?"))return;localStorage.clear();G.tk="";g("aWrap").classList.add("hide");g("lWrap").style.display="flex";}
+
+function showApp(){g("lWrap").style.display="none";g("aWrap").classList.remove("hide");g("hU").textContent=G.name+" ("+G.role+")";}
+
+function go(n){
+  PGS.forEach(function(p,i){g(p).classList.toggle("on",i===n);});
+  var nm=NAVMAP[n]!==undefined?NAVMAP[n]:n;
+  for(var i=0;i<4;i++){var ni=g("n"+i);if(ni)ni.classList.toggle("on",i===nm);}
+  g("hT").textContent=TTL[n]||"";
+  if(n===0)loadDash();
+  if(n===2)loadList();
+  if(n===1)setTimeout(function(){g("sId").focus();},150);
+  if(n===4)loadQR();
+}
+
+function api(p,cb){
+  if(G.tk)p.token=G.tk;
+  var qs=Object.keys(p).map(function(k){return encodeURIComponent(k)+"="+encodeURIComponent(p[k]);}).join("&");
+  fetch(API+"?"+qs)
+    .then(function(r){return r.text();})
+    .then(function(t){
+      try{
+        var i=t.indexOf("{");
+        if(i>0)t=t.substring(i);
+        cb(JSON.parse(t));
+      }catch(e){cb({ok:false,msg:""+e});}
+    })
+    .catch(function(e){cb({ok:false,msg:""+e});});
+}
+
+function loadDash(){
+  g("dLoad").classList.remove("hide");g("dBody").classList.add("hide");
+  api({action:"getStats"},function(r){
+    g("dLoad").classList.add("hide");if(!r||!r.ok)return;var d=r.data;
+    g("dT").textContent=d.totalStudents;
+    g("dK").textContent=fmt(d.totalKelishuv)+"$";
+    g("dZ").textContent=fmt(d.totalZaklad)+"$";
+    g("dTv").textContent=fmt(d.totalTolov)+"$";
+    g("dQ").textContent=fmt(d.totalQolgan)+"$";
+    var h="";
+    d.darsStats.forEach(function(ds){
+      h+='<div class="drow"><div class="drn">'+ds.dars+'-dars</div><div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap"><div class="dbg">'
+        +'<span class="bdg bkk">✅ '+ds.keldi+'</span>'
+        +'<span class="bdg bmm">❌ '+ds.kelmadi+'</span>'
+        +'<span class="bdg bol">🌐 '+ds.online+'</span>'
+        +'<span class="bdg bmt">— '+ds.empty+'</span>'
+        +'<span class="bdg bto">'+ds.tolov+'$</span></div>'
+        +(ds.empty>0?'<button class="tugbtn" onclick="darsTugadi('+ds.dars+')">🔔 Tugadi</button>':'<span style="color:#22c55e;font-size:11px">✅</span>')
+        +'</div></div>';
+    });
+    g("darsD").innerHTML=h;
+    var kh="";
+    Object.keys(d.kuratorStats).forEach(function(k){var ks=d.kuratorStats[k];if(!ks.count)return;
+      kh+='<div class="krow"><div><div class="krn">'+k+'</div><div class="kri">'+ks.count+" o'q | "+fmt(ks.tolov)+"$ to'langan | "+fmt(ks.qolgan)+"$ qarz</div></div></div>";
+    });
+    g("kurD").innerHTML=kh||'<div style="color:#9ca3af;font-size:13px">—</div>';
+    g("dBody").classList.remove("hide");
+  });
+}
+
+var camStream=null,camTimer=null,detector=null;
+
+function openCam(){
+  var wrap=g("camWrap"),video=g("camVideo");
+  wrap.classList.remove("hide");
+  
+  // BarcodeDetector API tekshirish
+  if(window.BarcodeDetector){
+    detector=new BarcodeDetector({formats:["qr_code","code_128","code_39","ean_13","ean_8","upc_a","upc_e"]});
+  }
+  
+  navigator.mediaDevices.getUserMedia({
+    video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}}
+  }).then(function(stream){
+    camStream=stream;
+    video.srcObject=stream;
+    video.onloadedmetadata=function(){
+      video.play();
+      camTimer=setInterval(scanFrame,300);
+    };
+  }).catch(function(e){
+    alert("Kameraga ruxsat bering! "+e.message);
+    wrap.classList.add("hide");
+  });
+}
+
+function closeCam(){
+  clearInterval(camTimer);
+  if(camStream){camStream.getTracks().forEach(function(t){t.stop();});camStream=null;}
+  g("camWrap").classList.add("hide");
+}
+
+function scanFrame(){
+  var video=g("camVideo"),canvas=g("camCanvas");
+  if(!video.videoWidth||video.paused||video.ended) return;
+  
+  // BarcodeDetector usuli (Chrome/Android)
+  if(detector){
+    detector.detect(video).then(function(codes){
+      if(codes&&codes.length>0){
+        var val=codes[0].rawValue;
+        if(val){closeCam();g("sId").value=val;findSt();}
+      }
+    }).catch(function(){});
+    return;
+  }
+  
+  // Canvas usuli (zaxira)
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
+  var ctx=canvas.getContext("2d");
+  ctx.drawImage(video,0,0);
+}
+function onSI(inp){clearTimeout(G.stm);G.stm=setTimeout(findSt,inp.value.indexOf("http")!==-1?200:600);}
+
+function findSt(){
+  var raw=g("sId").value.trim();if(!raw)return;
+  var id=raw,m=raw.match(/[?&]id=([^&\s#]+)/);
+  if(m)id=decodeURIComponent(m[1]);else id=raw.replace(/https?:\/\/\S+/g,"").trim();
+  if(!id)return;g("sId").value="";
+  msg("sMsg","inf","...");g("stCard").classList.add("hide");
+  api({action:"getStudent",id:id},function(r){
+    msg("sMsg","","");
+    if(!r||!r.ok){msg("sMsg","er","❌ Topilmadi: ["+id+"]");return;}
+    G.cur=r.data;fillCard(r.data);g("stCard").classList.remove("hide");msg("aMsg","","");g("aTolov").value="";
+  });
+}
+
+function fillCard(s){
+  g("cAv").textContent=ini(s.fio);g("cNm").textContent=s.fio;g("cI").textContent="ID: "+s.id;
+  g("cKr").textContent="👤 "+s.kurator;g("cK").textContent=s.kelishuv+"$";g("cZ").textContent=s.zaklad+"$";
+  g("cTv").textContent=s.totalTolov+"$";g("cQ").textContent=s.qolgan.toFixed(0)+"$";
+  g("cQ").style.color=s.qolgan>0?"#ef4444":"#22c55e";
+  var h="";s.darslar.forEach(function(d){var hc=hcl(d.holat),ht=d.holat||"—";
+    h+='<div class="di"><div class="dleft"><div class="dn">'+d.dars+'-dars</div>'
+      +(d.kim?'<div class="dk">✍️ '+d.kim+'</div>':'')
+      +'</div><div class="drt">'+(d.tolov>0?'<span class="dtv">+'+d.tolov+'$</span>':'')
+      +'<span class="bdg '+hc+'">'+ht+'</span></div></div>';
+  });g("cD").innerHTML=h;
+}
+
+function tvT(){g("tvDiv").style.display=g("aHolat").value==="Келмади"?"none":"block";}
+
+function saveAtt(){
+  if(!G.cur)return;var dars=parseInt(g("aDars").value),holat=g("aHolat").value,tolov=parseFloat(g("aTolov").value)||0;
+  msg("aMsg","inf","Saqlanmoqda...");
+  api({action:"save",id:G.cur.id,dars:dars,holat:holat,tolov:tolov},function(r){
+    if(r&&r.ok){msg("aMsg","ok","✅ "+r.msg);G.cur=r.data;fillCard(r.data);g("aTolov").value="";
+      setTimeout(function(){g("stCard").classList.add("hide");msg("aMsg","","");msg("sMsg","","");
+        setTimeout(function(){g("sId").focus();},100);},2200);
+    }else msg("aMsg","er","❌ "+(r?r.msg:"Xato"));
+  });
+}
+
+function darsTugadi(n){if(!confirm(n+"-dars tugadi?"))return;api({action:"darsTugadi",dars:n},function(r){if(r&&r.ok){alert("✅ "+r.msg);loadDash();}else alert("❌ "+(r?r.msg:"Xato"));});}
+
+function loadList(){
+  g("listD").innerHTML='<div class="ldg"><div class="spin"></div></div>';
+  api({action:"getAll"},function(r){if(!r||!r.ok)return;G.sts=r.data;renderList(r.data);});
+}
+
+function filtL(){var q=g("lQ").value.toLowerCase(),kur=g("lKur").value;
+  renderList(G.sts.filter(function(s){return(s.fio.toLowerCase().indexOf(q)!==-1||String(s.id).indexOf(q)!==-1)&&(!kur||s.kurator===kur);}));}
+
+function renderList(lst){if(!lst.length){g("listD").innerHTML='<div style="padding:30px;text-align:center;color:#9ca3af">Topilmadi</div>';return;}
+  var h='<div style="padding-top:6px">';lst.forEach(function(s){
+    h+='<div class="si" onclick="openProf(\''+s.id+'\')">'
+      +'<div class="sav">'+ini(s.fio)+'</div><div class="sinf"><div class="sn">'+s.fio+'</div>'
+      +'<div class="ss">ID: '+s.id+' | '+s.kurator+'</div></div>'
+      +'<div class="sq '+(s.qolgan>0?"qred":"qgrn")+'">'+s.qolgan.toFixed(0)+'$</div></div>';
+  });g("listD").innerHTML=h+'</div>';}
+
+function openProf(id){
+  PGS.forEach(function(p,i){g(p).classList.toggle("on",i===3);});
+  for(var i=0;i<4;i++){var ni=g("n"+i);if(ni)ni.classList.toggle("on",i===2);}
+  g("hT").textContent="👤 Profil";g("profD").innerHTML='<div class="ldg"><div class="spin"></div></div>';
+  api({action:"getStudent",id:id},function(r){if(!r||!r.ok)return;var s=r.data,dh="";
+    s.darslar.forEach(function(d){var hc=hcl(d.holat);
+      dh+='<div class="di"><div class="dleft"><div class="dn">'+d.dars+'-dars</div>'
+        +(d.kim?'<div class="dk">✍️ '+d.kim+'</div>':'')
+        +'</div><div class="drt">'+(d.tolov>0?'<span class="dtv">+'+d.tolov+'$</span>':'')
+        +'<span class="bdg '+hc+'">'+(d.holat||"—")+'</span></div></div>';
+    });
+    g("profD").innerHTML='<div style="background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)">'
+      +'<div class="phdr"><div class="pav">'+ini(s.fio)+'</div><div class="pnm">'+s.fio+'</div>'
+      +'<div class="pidd">ID: '+s.id+'</div><div class="pkr">👤 '+s.kurator+'</div></div>'
+      +'<div class="psts"><div class="pst"><div class="pstn">'+s.kelishuv+'$</div><div class="pstl">Kelishuv</div></div>'
+      +'<div class="pst"><div class="pstn">'+s.zaklad+'$</div><div class="pstl">Zaklad</div></div>'
+      +'<div class="pst"><div class="pstn">'+s.totalTolov+'$</div><div class="pstl">To\'langan</div></div>'
+      +'<div class="pst"><div class="pstn" style="color:'+(s.qolgan>0?"#ef4444":"#22c55e")+'">'+s.qolgan.toFixed(0)+'$</div><div class="pstl">Qolgan</div></div>'
+      +'</div><div style="padding:4px 14px 12px">'+dh+'</div></div>'
+      +'<div style="padding:10px 14px 16px"><button class="btn bg" onclick="goScan(\''+s.id+'\')">✅ Davomat kiritish</button>'
+      +'<button class="btn bgr" onclick="go(2)">← Ro\'yxatga qaytish</button></div>';
+  });
+}
+
+function goScan(id){go(1);g("sId").value=id;findSt();}
+
+function loadQR(){
+  g("qrD").innerHTML='<div class="ldg"><div class="spin"></div></div>';
+  api({action:"getAll"},function(r){
+    if(!r||!r.ok){g("qrD").innerHTML='<div style="padding:20px;text-align:center;color:#9ca3af">Xato</div>';return;}
+    G.qAll=r.data;renderQR(r.data);
+  });
+}
+function renderQR(lst){
+  if(!lst.length){g("qrD").innerHTML='<div style="padding:20px;text-align:center;color:#9ca3af">Oquvchilar yoq</div>';return;}
+  var h="";lst.forEach(function(s){
+    var url=SITE+"?id="+encodeURIComponent(s.id);
+    var qr="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+encodeURIComponent(url);
+    h+='<div style="background:#f9fafb;border-radius:10px;padding:10px;text-align:center">'
+      +'<img src="'+qr+'" style="width:100%;max-width:120px" loading="lazy">'
+      +'<div style="font-size:11px;font-weight:600;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+s.fio+'</div>'
+      +'<div style="font-size:10px;color:#9ca3af;margin-top:2px">ID: '+s.id+'</div></div>';
+  });g("qrD").innerHTML=h;
+}
+function filtQR(q){
+  if(!q){renderQR(G.qAll||[]);return;}
+  renderQR((G.qAll||[]).filter(function(s){
+    return s.fio.toLowerCase().indexOf(q.toLowerCase())!==-1||String(s.id).indexOf(q)!==-1;
+  }));
+}
+function addSt(){
+  var id=g("nId").value.trim(),fio=g("nFio").value.trim(),k=g("nK").value,z=g("nZ").value,kur=g("nKur").value;
+  if(!id||!fio||!k){msg("addMsg","er","ID, FIO va Kelishuv majburiy!");return;}
+  msg("addMsg","inf","...");
+  api({action:"addStudent",id:id,fio:fio,kelishuv:k,zaklad:z||0,kurator:kur},function(r){
+    if(r&&r.ok){msg("addMsg","ok","✅ "+r.msg);g("nId").value="";g("nFio").value="";g("nK").value="";g("nZ").value="";g("nKur").value="";G.sts=[];}
+    else msg("addMsg","er","❌ "+(r?r.msg:"Xato"));
+  });
+}
+
+function g(id){return document.getElementById(id);}
+function fmt(n){return Math.round(n||0).toLocaleString();}
+function ini(f){return(f||"").split(" ").map(function(w){return w[0]||"";}).join("").substring(0,2).toUpperCase()||"?";}
+function hcl(h){if(!h)return"bmt";var l=h.toLowerCase();if(l==="келди"||l==="keldi")return"bkk";if(l==="келмади"||l==="kelmadi")return"bmm";if(l==="онлайн"||l==="online")return"bol";return"bmt";}
+function msg(id,t,tx){var e=g(id);if(!e)return;if(!tx){e.innerHTML="";return;}e.innerHTML='<div class="'+(t==="ok"?"mok":t==="er"?"mer":"minf")+'">'+tx+'</div>';}
+</script>
+</body>
+</html>
